@@ -26,6 +26,7 @@ const getCat = fetchBreeds()
     });
   })
   .catch(error => {
+    console.log(error);
     ref.error.classList.remove('is-hidden');
   })
   .finally(() => {
@@ -33,12 +34,12 @@ const getCat = fetchBreeds()
   });
 
 // ===============================INFORMATION-ABOUT-CAT==================================
-const getCatsInfo = evt => {
+const getCatsInfo = ev => {
   ref.loader.innerHTML = '';
   ref.loader.classList.replace('is-hidden', 'loader');
   ref.error.classList.add('is-hidden');
 
-  const breedId = evt.currentTarget.value;
+  const breedId = ev.currentTarget.value;
 
   fetchCatByBreed(breedId)
     .then(res => {

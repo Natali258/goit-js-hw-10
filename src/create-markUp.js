@@ -2,6 +2,7 @@ function createOption(value) {
   let option = value.map(el => {
     return `<option value="${el.id}">${el.name}</option>`;
   });
+
   return option;
 }
 function catInfo(res) {
