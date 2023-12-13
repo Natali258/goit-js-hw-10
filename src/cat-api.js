@@ -8,10 +8,12 @@ const END_POINT2 = '/v1/images/search';
 
 function fetchBreeds() {
   return fetch(url).then(response => {
+    if (!response.ok) {
+      throw new Error(response.status);
+    }
     return response.json();
   });
 }
-export { fetchBreeds };
 
 function fetchCatByBreed(breedId) {
   return fetch(
@@ -23,4 +25,4 @@ function fetchCatByBreed(breedId) {
     return response.json();
   });
 }
-export { fetchCatByBreed };
+export { fetchBreeds, fetchCatByBreed };

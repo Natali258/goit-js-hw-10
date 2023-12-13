@@ -1,4 +1,5 @@
 import { fetchBreeds, fetchCatByBreed } from '../src/cat-api';
+import { createOption, catInfo } from '../src/create-markUp';
 import SlimSelect from 'slim-select';
 import 'slim-select/dist/slimselect.css';
 
@@ -9,11 +10,8 @@ const ref = {
   error: document.querySelector('.error'),
 };
 
-const sel = new SlimSelect({
-  select: '.breed-select',
-});
-
-ref.loader.classList.replace('loader', 'is-hidden');
+ref.loader.innerHTML = '';
+ref.loader.classList.replace('is-hidden', 'loader');
 ref.error.classList.add('is-hidden');
 ref.catInfo.classList.add('is-hidden');
 
@@ -21,14 +19,17 @@ ref.catInfo.classList.add('is-hidden');
 
 const getCat = fetchBreeds()
   .then(value => {
-    let option = [];
-    value.forEach(el => {
-      option.push({ text: el.name, value: el.id });
+    option = createOption(value);
+    ref.select.insertAdjacentHTML('beforeend', option);
+    new SlimSelect({
+      select: '.breed-select',
     });
-    sel.setData(option);
   })
   .catch(error => {
     ref.error.classList.remove('is-hidden');
+  })
+  .finally(() => {
+    ref.loader.classList.replace('loader', 'is-hidden');
   });
 
 // ===============================INFORMATION-ABOUT-CAT==================================
@@ -41,18 +42,17 @@ const getCatsInfo = e => {
 
   fetchCatByBreed(breedId)
     .then(res => {
-      ref.loader.classList.replace('loader', 'is-hidden');
       ref.catInfo.classList.remove('is-hidden');
-      ref.catInfo.innerHTML = `<div class="cat-info">
-      <img src="${res[0].url}" alt="${res[0].breeds[0].name}" width="400" />
-      <p class="descr">${res[0].breeds[0].description}</p>
-      <p class="temperament">Temperament: ${res[0].breeds[0].temperament}</p>
-    </div>`;
+      ref.catInfo.innerHTML = catInfo(res);
     })
     .catch(error => {
       ref.error.classList.remove('is-hidden');
+    })
+    .finally(() => {
+      ref.loader.classList.replace('loader', 'is-hidden');
     });
 };
 ref.select.addEventListener('change', getCatsInfo);
 
 // ===============================ERROR-HANDLING=========================================
+// console.log(1);
