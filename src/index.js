@@ -33,12 +33,12 @@ const getCat = fetchBreeds()
   });
 
 // ===============================INFORMATION-ABOUT-CAT==================================
-const getCatsInfo = e => {
+const getCatsInfo = evt => {
   ref.loader.innerHTML = '';
   ref.loader.classList.replace('is-hidden', 'loader');
   ref.error.classList.add('is-hidden');
 
-  const breedId = e.currentTarget.value;
+  const breedId = evt.currentTarget.value;
 
   fetchCatByBreed(breedId)
     .then(res => {
