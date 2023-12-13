@@ -20,7 +20,7 @@ ref.catInfo.classList.add('is-hidden');
 const getCat = fetchBreeds()
   .then(value => {
     console.log(value.data);
-    option = createOption(value.data);
+    const option = createOption(value.data);
     ref.select.insertAdjacentHTML('beforeend', option);
     new SlimSelect({
       select: '.breed-select',
