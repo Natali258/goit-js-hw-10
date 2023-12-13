@@ -19,7 +19,8 @@ ref.catInfo.classList.add('is-hidden');
 
 const getCat = fetchBreeds()
   .then(value => {
-    option = createOption(value);
+    console.log(value.data);
+    option = createOption(value.data);
     ref.select.insertAdjacentHTML('beforeend', option);
     new SlimSelect({
       select: '.breed-select',
@@ -44,7 +45,7 @@ const getCatsInfo = ev => {
   fetchCatByBreed(breedId)
     .then(res => {
       ref.catInfo.classList.remove('is-hidden');
-      ref.catInfo.innerHTML = catInfo(res);
+      ref.catInfo.innerHTML = catInfo(res.data);
     })
     .catch(error => {
       ref.error.classList.remove('is-hidden');
@@ -54,6 +55,3 @@ const getCatsInfo = ev => {
     });
 };
 ref.select.addEventListener('change', getCatsInfo);
-
-// ===============================ERROR-HANDLING=========================================
-// console.log(1);
